@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Qué tanto conoces a Victoria?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffebf0;
+            color: #8b0000;
+        }
+
+        .container {
+            width: 60%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #ff4d6d;
+        }
+
+        button {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #ff1a4d;
+            }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ff4d6d;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💖 ¿Qué tanto conoces a Victoria? 💖</h1>
+        <p id="pregunta">Presiona "Iniciar" para comenzar.</p>
+        <input type="text" id="respuesta" style="display:none;">
+        <br>
+        <button onclick="siguientePregunta()">Iniciar</button>
+    </div>
+    <script>
+        const preguntas = [
+            { texto: "¿Cuál es la edad de Victoria?", respuestas: ["20"] },
+            { texto: "¿Cuándo es el cumpleaños de Victoria?", respuestas: ["3/11"] },
+            { texto: "¿Cuál es su serie favorita?", respuestas: ["gilmore girls"] },
+            { texto: "¿Cuáles son sus colores favoritos?", respuestas: ["rojo", "rosa", "negro"] },
+            { texto: "¿Cuál es su bebida favorita?", respuestas: ["jugo de limon", "ron"] },
+            { texto: "¿Cuál es su comida favorita?", respuestas: ["pollo"] },
+            { texto: "¿Cuál es su postre favorito?", respuestas: ["helado yoguen"] },
+            { texto: "¿Cuál es su hobbie?", respuestas: ["leer"] },
+            { texto: "¿Quién es su artista masculino favorito?", respuestas: ["bad bunny"] },
+            { texto: "¿Quién es su artista femenina favorita?", respuestas: ["corina smith"] },
+            { texto: "¿Cuál es su grupo o banda favorita?", respuestas: ["cnco"] },
+            { texto: "¿Qué carrera estudia Victoria?", respuestas: ["tep redes de datos"] },
+            { texto: "¿Qué es algo que Victoria detesta?", respuestas: ["que le ignoren", "los hombres"] }
+        ];
+
+        let indicePregunta = 0;
+        let respuestasCorrectas = 0;
+
+        function siguientePregunta() {
+            let input = document.getElementById("respuesta");
+            let boton = document.querySelector("button");
+
+            if (indicePregunta > 0) {
+                let respuestaUsuario = input.value.trim().toLowerCase();
+                if (preguntas[indicePregunta - 1].respuestas.includes(respuestaUsuario)) {
+                    respuestasCorrectas++;
+                }
+            }
+
+            if (indicePregunta < preguntas.length) {
+                document.getElementById("pregunta").innerText = preguntas[indicePregunta].texto;
+                input.value = "";
+                input.style.display = "block";
+                boton.innerText = "Siguiente";
+                indicePregunta++;
+            } else {
+                let porcentaje = (respuestasCorrectas / preguntas.length) * 100;
+                document.getElementById("pregunta").innerHTML = `¡Terminaste el juego! Conoces a Victoria en un ${porcentaje.toFixed(2)}%`;
+                input.style.display = "none";
+                boton.innerText = "Reiniciar";
+                boton.onclick = () => location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
